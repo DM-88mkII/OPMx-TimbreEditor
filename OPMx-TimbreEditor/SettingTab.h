@@ -61,8 +61,8 @@ class CSettingTab : public CDialogEx
 		};
 		enum ESynthesizeFreq
 		{
-			Hz55555,
-			Hz55466,
+			Hz55930,
+			Hz55900,
 		};
 		EFormatType GetFormatType();
 		void SetFormatType(EFormatType EFormatType);

@@ -21,8 +21,7 @@ CTimbre::CTimbre(int SampleRate)
 ,output_rate(SampleRate)
 ,output_step(0x100000000ull / output_rate)
 ,output_pos(0)
-//,m_pFmChip(std::make_unique<FmChip<ymfm::ym2151>>(output_rate * 72, EChipType::YM2151))
-,m_pFmChip(std::make_unique<FmChip<ymfm::ym2151>>(3579545, EChipType::YM2151))
+,m_pFmChip(std::make_unique<FmChip<ymfm::ym2151>>(output_rate * 64, EChipType::YM2151))
 {
 	{	// 
 		Control.EN.SetValue(1);

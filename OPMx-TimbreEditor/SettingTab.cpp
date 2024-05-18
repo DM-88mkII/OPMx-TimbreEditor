@@ -96,7 +96,7 @@ BOOL CSettingTab::OnInitDialog()
 	m_CSliderCtrlDCCutRate.SetRange(0, 9);
 	m_CSliderCtrlDCCutRate.SetPos(theApp.GetValue(_T("DCCutRate"), 5));
 	
-	m_CComboBoxSynthesizeFreq.SetCurSel(theApp.GetValue(_T("SynthesizeFreq"), (int)ESynthesizeFreq::Hz55555));
+	m_CComboBoxSynthesizeFreq.SetCurSel(theApp.GetValue(_T("SynthesizeFreq"), (int)ESynthesizeFreq::Hz55930));
 	SetDropdownSize(m_CComboBoxSynthesizeFreq);
 	
 	return FALSE;
@@ -239,10 +239,10 @@ CSettingTab::ESynthesizeFreq CSettingTab::GetSynthesizeFreq()
 int CSettingTab::GetSynthesizeFreq(ESynthesizeFreq ESynthesizeFreq)
 {
 	switch (ESynthesizeFreq){
-		case CSettingTab::Hz55555: return 55555;
-		case CSettingTab::Hz55466: return 55466;
+		case CSettingTab::Hz55930: return 55930;
+		case CSettingTab::Hz55900: return 55900;
 	}
-	return 55555;
+	return 55930;
 }
 
 

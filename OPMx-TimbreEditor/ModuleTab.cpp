@@ -152,8 +152,7 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		
 		m_Format.wFormatTag = WAVE_FORMAT_PCM;
 		m_Format.nChannels = 1;
-//		m_Format.nSamplesPerSec = rCSettingTab.GetSynthesizeFreq((CSettingTab::ESynthesizeFreq)SynthesizeFreq);
-		m_Format.nSamplesPerSec = 48000;
+		m_Format.nSamplesPerSec = rCSettingTab.GetSynthesizeFreq((CSettingTab::ESynthesizeFreq)SynthesizeFreq);
 		m_Format.wBitsPerSample = sizeof(m_aaQueue[0][0]) * 8;
 		m_Format.cbSize = 0;
 		m_Format.nBlockAlign = (m_Format.wBitsPerSample * m_Format.nChannels) / 8;
