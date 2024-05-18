@@ -18,7 +18,7 @@ YAMAHA の FM音源チップ OPM系用の音色エディターです。
   * mml2vgm（Mタイプ）
   * FMP（FCタイプ）
   * MAmidiMemo（mopmタイプ）
-  * Z_MUSIC
+  * Z-MUSIC
 * ペーストは、上記全ての形式を自動判別してインポート
 
 <br>
