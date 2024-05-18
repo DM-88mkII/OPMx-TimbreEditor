@@ -33,11 +33,11 @@ void CIntermediate::to_json(nlohmann::json& j) const
 {
 	j = nlohmann::json{
 		{"Information",{
-			{"Summary",		"Timbre for OPN Series",	},
-			{"ChipType",	"YM2203",	},
+			{"Summary",		"Timbre for OPM Series",	},
+			{"ChipType",	"YM2151",	},
 		}},
 		{"Meta",{
-			{"Application",	"OPNx-TimbreEditor",	},
+			{"Application",	"OPMx-TimbreEditor",	},
 			{"Version",		"0.0.0",	},
 		}},
 		{"Timbre",{
