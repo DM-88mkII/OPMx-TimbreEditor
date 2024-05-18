@@ -76,14 +76,20 @@ struct CIntermediate
 		void ToMucom(CString& Text);
 		void FromMucom(const CString& Text);
 		
+		void ToMucomDotNet(CString& Text);
+		void FromMucomDotNet(const CString& Text);
+		
+		void ToMml2vgm(CString& Text);
+		void FromMml2vgm(const CString& Text);
+		
 		void ToFmp(CString& Text);
 		void FromFmp(const CString& Text);
 		
-		void ToPmd(CString& Text);
-		void FromPmd(const CString& Text);
-		
 		void ToMAmidiMemo(CString& Text);
 		void FromMAmidiMemo(const CString& Text);
+		
+		void ToZMusic(CString& Text);
+		void FromZMusic(const CString& Text);
 };
 
 
