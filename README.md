@@ -13,12 +13,12 @@ YAMAHA の FM音源チップ OPM系用の音色エディターです。
   * 音色のプレビューで、CL(カレントレベル)を無音の状態から発音
   * 音色のアタック部の作り込みに便利
 * 拡張コピーに対応（以下の形式に対応）
-  * MUCOM形式
+  * MUCOM
   * mucomDotNet
   * mml2vgm
-  * FMP形式（FC形式）
-  * MAmidiMemo形式（mopm形式）
-  * Z_MUSIC形式
+  * FMP（FC）
+  * MAmidiMemo（mopm）
+  * Z_MUSIC
 * ペーストは、上記全ての形式を自動判別してインポート
 
 <br>
