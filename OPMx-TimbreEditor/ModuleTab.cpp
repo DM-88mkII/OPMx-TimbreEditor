@@ -44,6 +44,7 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_FDE_STATIC,
 		IDC_TIMBRE_ALG_STATIC,
 		IDC_TIMBRE_FB_STATIC,
+		IDC_TIMBRE_NUM_STATIC,
 		IDC_TIMBRE_KML_STATIC,
 		IDC_TIMBRE_KMH_STATIC,
 		IDC_TIMBRE_WF_STATIC,
@@ -52,7 +53,7 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_AMD_STATIC,
 		IDC_TIMBRE_PMS_STATIC,
 		IDC_TIMBRE_PMD_STATIC,
-		IDC_TIMBRE_NUM_STATIC,
+		IDC_TIMBRE_LKS_STATIC,
 		IDC_TIMBRE_KT_STATIC,
 		IDC_TIMBRE_DT_STATIC,
 	},
@@ -69,8 +70,9 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_DT1_1_STATIC,
 		IDC_TIMBRE_DT2_1_STATIC,
 		IDC_TIMBRE_AME1_STATIC,
-		IDC_TIMBRE_SE_KT1_STATIC,
-		IDC_TIMBRE_SE_FDT1_STATIC,
+		IDC_TIMBRE_VOID1_0_STATIC,
+		IDC_TIMBRE_VOID1_1_STATIC,
+		IDC_TIMBRE_VOID1_2_STATIC,
 	},
 	{	IDC_TIMBRE_EN2_STATIC,
 		IDC_TIMBRE_FDE2_STATIC,
@@ -85,8 +87,9 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_DT1_2_STATIC,
 		IDC_TIMBRE_DT2_2_STATIC,
 		IDC_TIMBRE_AME2_STATIC,
-		IDC_TIMBRE_SE_KT2_STATIC,
-		IDC_TIMBRE_SE_FDT2_STATIC,
+		IDC_TIMBRE_VOID2_0_STATIC,
+		IDC_TIMBRE_VOID2_1_STATIC,
+		IDC_TIMBRE_VOID2_2_STATIC,
 	},
 	{	IDC_TIMBRE_EN3_STATIC,
 		IDC_TIMBRE_FDE3_STATIC,
@@ -101,8 +104,9 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_DT1_3_STATIC,
 		IDC_TIMBRE_DT2_3_STATIC,
 		IDC_TIMBRE_AME3_STATIC,
-		IDC_TIMBRE_SE_KT3_STATIC,
-		IDC_TIMBRE_SE_FDT3_STATIC,
+		IDC_TIMBRE_VOID3_0_STATIC,
+		IDC_TIMBRE_VOID3_1_STATIC,
+		IDC_TIMBRE_VOID3_2_STATIC,
 	},
 	{	IDC_TIMBRE_EN4_STATIC,
 		IDC_TIMBRE_FDE4_STATIC,
@@ -117,8 +121,9 @@ CModuleTab::CModuleTab(CWnd* pParent /*=nullptr*/)
 		IDC_TIMBRE_DT1_4_STATIC,
 		IDC_TIMBRE_DT2_4_STATIC,
 		IDC_TIMBRE_AME4_STATIC,
-		IDC_TIMBRE_SE_KT4_STATIC,
-		IDC_TIMBRE_SE_FDT4_STATIC,
+		IDC_TIMBRE_VOID4_0_STATIC,
+		IDC_TIMBRE_VOID4_1_STATIC,
+		IDC_TIMBRE_VOID4_2_STATIC,
 	},
 }
 ,mx(2)
@@ -585,7 +590,7 @@ IValue& CModuleTab::GetParamValue(int x, int y)
 void CModuleTab::DrawAllParam()
 {
 	for (int y = 0; y < 5; ++y){
-		for (int x = 0; x < 15; ++x){
+		for (int x = 0; x < 16; ++x){
 			auto pCWnd = GetParamWnd(x, y);
 			if (pCWnd != nullptr){
 				pCWnd->SetWindowText((LPCTSTR)GetParamValue(x, y).GetText());
@@ -637,7 +642,7 @@ void CModuleTab::RedrawParam(int ax, int ay)
 	
 	mx += ax;
 	mx = (mx <  0)?  0: mx;
-	mx = (mx > 14)? 14: mx;
+	mx = (mx > 15)? 15: mx;
 	
 	my += ay;
 	my = (my < 0)? 0: my;

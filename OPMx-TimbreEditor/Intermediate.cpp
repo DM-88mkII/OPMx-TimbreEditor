@@ -46,6 +46,7 @@ void CIntermediate::to_json(nlohmann::json& j) const
 				{"FDE",		Control.FDE,},
 				{"ALG",		Control.ALG,},
 				{"FB",		Control.FB,	},
+				{"NUM",		Control.NUM,},
 				{"KML",		Control.KML,},
 				{"KMH",		Control.KMH,},
 				{"WF",		Control.WF,	},
@@ -54,7 +55,7 @@ void CIntermediate::to_json(nlohmann::json& j) const
 				{"AMD",		Control.AMD,},
 				{"PMS",		Control.PMS,},
 				{"PMD",		Control.PMD,},
-				{"NUM",		Control.NUM,},
+				{"LKS",		Control.LKS,},
 				{"KT",		Control.KT,	},
 				{"DT",		Control.DT,	},
 			}},
@@ -104,6 +105,7 @@ void CIntermediate::from_json(const nlohmann::json& j)
 				Control.FDE = o.at("FDE").get<int>();
 				Control.ALG = o.at("ALG").get<int>();
 				Control.FB = o.at("FB").get<int>();
+				Control.NUM = o.at("NUM").get<int>();
 				Control.KML = o.value("KML", 0);
 				Control.KMH = o.value("KMH", 128);
 				Control.WF = o.at("WF").get<int>();
@@ -112,7 +114,7 @@ void CIntermediate::from_json(const nlohmann::json& j)
 				Control.AMD = o.at("AMD").get<int>();
 				Control.PMS = o.at("PMS").get<int>();
 				Control.PMD = o.at("PMD").get<int>();
-				Control.NUM = o.at("NUM").get<int>();
+				Control.LKS = o.value("LKS", 0);
 				Control.KT = o.at("KT").get<int>();
 				Control.DT = o.at("DT").get<int>();
 			}

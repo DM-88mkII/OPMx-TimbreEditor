@@ -41,7 +41,7 @@ class CModuleTab : public CDialogEx, IXAudio2VoiceCallback
 		CTimbreTab m_CTimbreTab;
 		std::mutex m_Mutex;
 		std::vector<std::shared_ptr<CTimbre>> m_aCTimbre;
-		int m_aaParam[5][15];
+		int m_aaParam[5][16];
 		int mx;
 		int my;
 		int m_iPrev;

@@ -67,17 +67,18 @@ IValue& CTimbre::GetValue(int x, int y)
 				case 1: return Control.FDE;
 				case 2: return Control.ALG;
 				case 3: return Control.FB;
-				case 4: return Control.KML;
-				case 5: return Control.KMH;
-				case 6: return Control.WF;
-				case 7: return Control.FRQ;
-				case 8: return Control.AMS;
-				case 9: return Control.AMD;
-				case 10: return Control.PMS;
-				case 11: return Control.PMD;
-				case 12: return Control.NUM;
-				case 13: return Control.KT;
-				case 14: return Control.DT;
+				case 4: return Control.NUM;
+				case 5: return Control.KML;
+				case 6: return Control.KMH;
+				case 7: return Control.WF;
+				case 8: return Control.FRQ;
+				case 9: return Control.AMS;
+				case 10: return Control.AMD;
+				case 11: return Control.PMS;
+				case 12: return Control.PMD;
+				case 13: return Control.LKS;
+				case 14: return Control.KT;
+				case 15: return Control.DT;
 			}
 			break;
 		}
@@ -98,6 +99,7 @@ IValue& CTimbre::GetValue(int x, int y)
 				case 12: return aOperator[y-1].AME;
 				case 13: break;
 				case 14: break;
+				case 15: break;
 			}
 			break;
 		}
@@ -187,8 +189,10 @@ void CTimbre::KeyOn()
 		m_pFmChip->write(0xf8, ((aOperator[3].D1L.GetValue()<<4) | aOperator[3].RR.GetValue()));
 		m_pFmChip->write(0x20, (0xc0 | (Control.FB.GetValue()<<3) | Control.ALG.GetValue()));
 		
-		m_pFmChip->write(0x01, 0x02);
-		m_pFmChip->write(0x01, 0x00);
+		if (Control.LKS.GetValue() > 0){
+			m_pFmChip->write(0x01, 0x02);
+			m_pFmChip->write(0x01, 0x00);
+		}
 		m_pFmChip->write(0x18, Control.FRQ.GetValue());
 		m_pFmChip->write(0x19, (0x00 | Control.AMD.GetValue()));
 		m_pFmChip->write(0x19, (0x80 | Control.PMD.GetValue()));
@@ -249,6 +253,7 @@ void CTimbre::SetIntermediate(CIntermediate v)
 	Control.FDE.SetValue(v.Control.FDE);
 	Control.ALG.SetValue(v.Control.ALG);
 	Control.FB.SetValue(v.Control.FB);
+	Control.NUM.SetValue(v.Control.NUM);
 	Control.KML.SetValue(v.Control.KML);
 	Control.KMH.SetValue(v.Control.KMH);
 	Control.WF.SetValue(v.Control.WF);
@@ -257,7 +262,7 @@ void CTimbre::SetIntermediate(CIntermediate v)
 	Control.AMD.SetValue(v.Control.AMD);
 	Control.PMS.SetValue(v.Control.PMS);
 	Control.PMD.SetValue(v.Control.PMD);
-	Control.NUM.SetValue(v.Control.NUM);
+	Control.LKS.SetValue(v.Control.LKS);
 	Control.KT.SetValue(v.Control.KT);
 	Control.DT.SetValue(v.Control.DT);
 	
@@ -288,6 +293,7 @@ CIntermediate CTimbre::GetIntermediate()
 	v.Control.FDE = Control.FDE.GetValue();
 	v.Control.ALG = Control.ALG.GetValue();
 	v.Control.FB = Control.FB.GetValue();
+	v.Control.NUM = Control.NUM.GetValue();
 	v.Control.KML = Control.KML.GetValue();
 	v.Control.KMH = Control.KMH.GetValue();
 	v.Control.WF = Control.WF.GetValue();
@@ -296,7 +302,7 @@ CIntermediate CTimbre::GetIntermediate()
 	v.Control.AMD = Control.AMD.GetValue();
 	v.Control.PMS = Control.PMS.GetValue();
 	v.Control.PMD = Control.PMD.GetValue();
-	v.Control.NUM = Control.NUM.GetValue();
+	v.Control.LKS = Control.LKS.GetValue();
 	v.Control.KT = Control.KT.GetValue();
 	v.Control.DT = Control.DT.GetValue();
 	

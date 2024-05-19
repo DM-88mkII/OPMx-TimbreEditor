@@ -28,6 +28,7 @@ class CTimbre
 			CValue<1, 0, 7> ALG;
 			CValue<1, 0, 7> FB;
 			
+			CValue<3, 0, 127> NUM;
 			CValue<2, 1, 96> KML;
 			CValue<2, 1, 96> KMH;
 			
@@ -37,8 +38,7 @@ class CTimbre
 			CValue<3, 0, 127> AMD;
 			CValue<1, 0, 7> PMS;
 			CValue<3, -64, 63> PMD;
-			
-			CValue<3, 0, 127> NUM;
+			CValue<1, 0, 1> LKS;
 			
 			CValue<3, -95, 95> KT;
 			CValue<4, -999, 999> DT;

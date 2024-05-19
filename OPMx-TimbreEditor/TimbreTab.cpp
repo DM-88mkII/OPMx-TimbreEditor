@@ -65,17 +65,18 @@ HBRUSH CTimbreTab::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		case IDC_TIMBRE_FDE_STATIC:{	SetColor(pDC, 1, 0); break; }
 		case IDC_TIMBRE_ALG_STATIC:{	SetColor(pDC, 2, 0); break; }
 		case IDC_TIMBRE_FB_STATIC:{		SetColor(pDC, 3, 0); break; }
-		case IDC_TIMBRE_KML_STATIC:{	SetColor(pDC, 4, 0); break; }
-		case IDC_TIMBRE_KMH_STATIC:{	SetColor(pDC, 5, 0); break; }
-		case IDC_TIMBRE_WF_STATIC:{	SetColor(pDC, 6, 0); break; }
-		case IDC_TIMBRE_FRQ_STATIC:{	SetColor(pDC, 7, 0); break; }
-		case IDC_TIMBRE_AMS_STATIC:{	SetColor(pDC, 8, 0); break; }
-		case IDC_TIMBRE_AMD_STATIC:{	SetColor(pDC, 9, 0); break; }
-		case IDC_TIMBRE_PMS_STATIC:{	SetColor(pDC, 10, 0); break; }
-		case IDC_TIMBRE_PMD_STATIC:{	SetColor(pDC, 11, 0); break; }
-		case IDC_TIMBRE_NUM_STATIC:{	SetColor(pDC, 12, 0); break; }
-		case IDC_TIMBRE_KT_STATIC:{		SetColor(pDC, 13, 0); break; }
-		case IDC_TIMBRE_DT_STATIC:{		SetColor(pDC, 14, 0); break; }
+		case IDC_TIMBRE_NUM_STATIC:{	SetColor(pDC, 4, 0); break; }
+		case IDC_TIMBRE_KML_STATIC:{	SetColor(pDC, 5, 0); break; }
+		case IDC_TIMBRE_KMH_STATIC:{	SetColor(pDC, 6, 0); break; }
+		case IDC_TIMBRE_WF_STATIC:{		SetColor(pDC, 7, 0); break; }
+		case IDC_TIMBRE_FRQ_STATIC:{	SetColor(pDC, 8, 0); break; }
+		case IDC_TIMBRE_AMS_STATIC:{	SetColor(pDC, 9, 0); break; }
+		case IDC_TIMBRE_AMD_STATIC:{	SetColor(pDC, 10, 0); break; }
+		case IDC_TIMBRE_PMS_STATIC:{	SetColor(pDC, 11, 0); break; }
+		case IDC_TIMBRE_PMD_STATIC:{	SetColor(pDC, 12, 0); break; }
+		case IDC_TIMBRE_LKS_STATIC:{	SetColor(pDC, 13, 0); break; }
+		case IDC_TIMBRE_KT_STATIC:{		SetColor(pDC, 14, 0); break; }
+		case IDC_TIMBRE_DT_STATIC:{		SetColor(pDC, 15, 0); break; }
 		
 		case IDC_TIMBRE_EN1_STATIC:{	SetColor(pDC, 0, 1); break; }
 		case IDC_TIMBRE_FDE1_STATIC:{	SetColor(pDC, 1, 1); break; }
@@ -90,8 +91,9 @@ HBRUSH CTimbreTab::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		case IDC_TIMBRE_DT1_1_STATIC:{	SetColor(pDC, 10, 1); break; }
 		case IDC_TIMBRE_DT2_1_STATIC:{	SetColor(pDC, 11, 1); break; }
 		case IDC_TIMBRE_AME1_STATIC:{	SetColor(pDC, 12, 1); break; }
-		case IDC_TIMBRE_SE_KT1_STATIC:{	SetColor(pDC, 13, 1); break; }
-		case IDC_TIMBRE_SE_FDT1_STATIC:{SetColor(pDC, 14, 1); break; }
+		case IDC_TIMBRE_VOID1_0_STATIC:{SetColor(pDC, 13, 1); break; }
+		case IDC_TIMBRE_VOID1_1_STATIC:{SetColor(pDC, 14, 1); break; }
+		case IDC_TIMBRE_VOID1_2_STATIC:{SetColor(pDC, 15, 1); break; }
 		
 		case IDC_TIMBRE_EN2_STATIC:{	SetColor(pDC, 0, 2); break; }
 		case IDC_TIMBRE_FDE2_STATIC:{	SetColor(pDC, 1, 2); break; }
@@ -106,8 +108,9 @@ HBRUSH CTimbreTab::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		case IDC_TIMBRE_DT1_2_STATIC:{	SetColor(pDC, 10, 2); break; }
 		case IDC_TIMBRE_DT2_2_STATIC:{	SetColor(pDC, 11, 2); break; }
 		case IDC_TIMBRE_AME2_STATIC:{	SetColor(pDC, 12, 2); break; }
-		case IDC_TIMBRE_SE_KT2_STATIC:{	SetColor(pDC, 13, 2); break; }
-		case IDC_TIMBRE_SE_FDT2_STATIC:{SetColor(pDC, 14, 2); break; }
+		case IDC_TIMBRE_VOID2_0_STATIC:{SetColor(pDC, 13, 2); break; }
+		case IDC_TIMBRE_VOID2_1_STATIC:{SetColor(pDC, 14, 2); break; }
+		case IDC_TIMBRE_VOID2_2_STATIC:{SetColor(pDC, 15, 2); break; }
 		
 		case IDC_TIMBRE_EN3_STATIC:{	SetColor(pDC, 0, 3); break; }
 		case IDC_TIMBRE_FDE3_STATIC:{	SetColor(pDC, 1, 3); break; }
@@ -122,8 +125,9 @@ HBRUSH CTimbreTab::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		case IDC_TIMBRE_DT1_3_STATIC:{	SetColor(pDC, 10, 3); break; }
 		case IDC_TIMBRE_DT2_3_STATIC:{	SetColor(pDC, 11, 3); break; }
 		case IDC_TIMBRE_AME3_STATIC:{	SetColor(pDC, 12, 3); break; }
-		case IDC_TIMBRE_SE_KT3_STATIC:{	SetColor(pDC, 13, 3); break; }
-		case IDC_TIMBRE_SE_FDT3_STATIC:{SetColor(pDC, 14, 3); break; }
+		case IDC_TIMBRE_VOID3_0_STATIC:{SetColor(pDC, 13, 3); break; }
+		case IDC_TIMBRE_VOID3_1_STATIC:{SetColor(pDC, 14, 3); break; }
+		case IDC_TIMBRE_VOID3_2_STATIC:{SetColor(pDC, 15, 3); break; }
 		
 		case IDC_TIMBRE_EN4_STATIC:{	SetColor(pDC, 0, 4); break; }
 		case IDC_TIMBRE_FDE4_STATIC:{	SetColor(pDC, 1, 4); break; }
@@ -138,8 +142,9 @@ HBRUSH CTimbreTab::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		case IDC_TIMBRE_DT1_4_STATIC:{	SetColor(pDC, 10, 4); break; }
 		case IDC_TIMBRE_DT2_4_STATIC:{	SetColor(pDC, 11, 4); break; }
 		case IDC_TIMBRE_AME4_STATIC:{	SetColor(pDC, 12, 4); break; }
-		case IDC_TIMBRE_SE_KT4_STATIC:{	SetColor(pDC, 13, 4); break; }
-		case IDC_TIMBRE_SE_FDT4_STATIC:{SetColor(pDC, 14, 4); break; }
+		case IDC_TIMBRE_VOID4_0_STATIC:{SetColor(pDC, 13, 4); break; }
+		case IDC_TIMBRE_VOID4_1_STATIC:{SetColor(pDC, 14, 4); break; }
+		case IDC_TIMBRE_VOID4_2_STATIC:{SetColor(pDC, 15, 4); break; }
 		
 		case IDC_TIMBRE_OP1_STATIC:{	SetColor(pDC, 0); break; }
 		case IDC_TIMBRE_OP2_STATIC:{	SetColor(pDC, 1); break; }

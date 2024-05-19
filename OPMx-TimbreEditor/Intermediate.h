@@ -22,6 +22,7 @@ struct CIntermediate
 			int ALG;
 			int FB;
 			
+			int NUM;
 			int KML;
 			int KMH;
 			
@@ -31,8 +32,7 @@ struct CIntermediate
 			int AMD;
 			int PMS;
 			int PMD;
-			
-			int NUM;
+			int LKS;
 			
 			int KT;
 			int DT;
