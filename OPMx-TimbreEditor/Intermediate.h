@@ -32,7 +32,7 @@ struct CIntermediate
 			int AMD;
 			int PMS;
 			int PMD;
-			int LKS;
+			int LFR;
 			
 			int KT;
 			int DT;

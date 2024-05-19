@@ -55,7 +55,7 @@ void CIntermediate::to_json(nlohmann::json& j) const
 				{"AMD",		Control.AMD,},
 				{"PMS",		Control.PMS,},
 				{"PMD",		Control.PMD,},
-				{"LKS",		Control.LKS,},
+				{"LFR",		Control.LFR,},
 				{"KT",		Control.KT,	},
 				{"DT",		Control.DT,	},
 			}},
@@ -114,7 +114,7 @@ void CIntermediate::from_json(const nlohmann::json& j)
 				Control.AMD = o.at("AMD").get<int>();
 				Control.PMS = o.at("PMS").get<int>();
 				Control.PMD = o.at("PMD").get<int>();
-				Control.LKS = o.value("LKS", 0);
+				Control.LFR = o.value("LFR", 0);
 				Control.KT = o.at("KT").get<int>();
 				Control.DT = o.at("DT").get<int>();
 			}
