@@ -53,11 +53,18 @@ class CSettingTab : public CDialogEx
 	public:
 		enum EFormatType
 		{
-			MUCOM,
-			mucomDotNet,
-			mml2vgm,
-			FMP,
-			MAmidiMemo,
+			Mucom,
+			PmdOPN,
+			PmdOPM,
+			FmpF,
+			FmpFA,
+			FmpFC,
+			Mml2VgmF,
+			Mml2VgmN,
+			Mml2VgmM,
+			mucomDotNET,
+			MAmidiMemoMOPN,
+			MAmidiMemoMOPM,
 			Z_MUSIC,
 			Num,
 		};

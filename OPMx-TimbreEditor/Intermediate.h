@@ -72,21 +72,43 @@ struct CIntermediate
 		std::string Trim(const std::string& Token, const std::string& trim);
 		int ToValue(const std::string& Token);
 		void GetOperator(const std::vector<std::string>& Tokens, int iOperator);
+		void GetOperatorOPN(const std::vector<std::string>& Tokens, int iOperator);
 		
 		void ToMucom(CString& Text);
 		void FromMucom(const CString& Text);
 		
-		void ToMucomDotNet(CString& Text);
-		void FromMucomDotNet(const CString& Text);
+		void ToPmdOPN(CString& Text);
+		void FromPmdOPN(const CString& Text);
 		
-		void ToMml2vgm(CString& Text);
-		void FromMml2vgm(const CString& Text);
+		void ToPmdOPM(CString& Text);
+		void FromPmdOPM(const CString& Text);
 		
-		void ToFmp(CString& Text);
-		void FromFmp(const CString& Text);
+		void ToFmpF(CString& Text);
+		void FromFmpF(const CString& Text);
 		
-		void ToMAmidiMemo(CString& Text);
-		void FromMAmidiMemo(const CString& Text);
+		void ToFmpFA(CString& Text);
+		void FromFmpFA(const CString& Text);
+		
+		void ToFmpFC(CString& Text);
+		void FromFmpFC(const CString& Text);
+		
+		void ToMml2VgmF(CString& Text);
+		void FromMml2VgmF(const CString& Text);
+		
+		void ToMml2VgmN(CString& Text);
+		void FromMml2VgmN(const CString& Text);
+		
+		void ToMml2VgmM(CString& Text);
+		void FromMml2VgmM(const CString& Text);
+		
+		void ToMucomDotNET(CString& Text);
+		void FromMucomDotNET(const CString& Text);
+		
+		void ToMAmidiMemoMOPN(CString& Text);
+		void FromMAmidiMemoMOPN(const CString& Text);
+		
+		void ToMAmidiMemoMOPM(CString& Text);
+		void FromMAmidiMemoMOPM(const CString& Text);
 		
 		void ToZMusic(CString& Text);
 		void FromZMusic(const CString& Text);
