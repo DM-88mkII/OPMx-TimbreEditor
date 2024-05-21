@@ -16,16 +16,19 @@ YAMAHA の FM音源チップ OPM系用の音色エディターです。
   * MUCOM
   * PMD（OPN型）
   * PMD（OPM型）
-  * FMP（F形式）
-  * FMP（FA形式）
-  * FMP（FC形式）
+  * FMP
+  * FMP（A形式）
+  * FMP7（F形式）
+  * FMP7（FA形式）
+  * FMP7（FC形式）
   * mml2vgm（F形式）
   * mml2vgm（N形式）
   * mml2vgm（M形式）
   * mucomDotNET
   * MAmidiMemo（mopn形式）
   * MAmidiMemo（mopm形式）
-  * Z-MUSIC
+  * Z-MUSIC（v形式）
+  * Z-MUSIC（@形式）
 * ペーストは、上記全ての形式を自動判別してインポート
 
 <br>
