@@ -1710,7 +1710,7 @@ void CIntermediate::ToZMusicAt(CString& Text)
 		s += std::format(",{:>3}", aOperator[i].MT);
 		s += std::format(",{:>3}", aOperator[i].DT1);
 		s += std::format(",{:>3}", aOperator[i].DT2);
-		s += std::format(",{:>3}",  aOperator[i].AME);
+		s += std::format(",{:>3}", aOperator[i].AME);
 		s += "\n      ";
 	}
 	
