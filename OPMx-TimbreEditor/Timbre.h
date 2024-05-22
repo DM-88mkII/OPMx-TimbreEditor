@@ -41,7 +41,7 @@ class CTimbre
 			CValue<1, 0, 1> LFR;
 			
 			CValue<3, -95, 95> KT;
-			CValue<4, -999, 999> DT;
+			CValue<4, -999, 999> FDT;
 		};
 		Control Control;
 		

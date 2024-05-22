@@ -32,7 +32,7 @@ CTimbre::CTimbre(int SampleRate)
 		Control.KMH.SetValue(96);
 		Control.NUM.SetValue(0);
 		Control.KT.SetValue(0);
-		Control.DT.SetValue(0);
+		Control.FDT.SetValue(0);
 		
 		for (int i = 0; i < 4; ++i){
 			aOperator[i].EN.SetValue(1);
@@ -78,7 +78,7 @@ IValue& CTimbre::GetValue(int x, int y)
 				case 12: return Control.PMD;
 				case 13: return Control.LFR;
 				case 14: return Control.KT;
-				case 15: return Control.DT;
+				case 15: return Control.FDT;
 			}
 			break;
 		}
@@ -146,12 +146,12 @@ static const int16_t s_aOctNoteFrac[]={
 void CTimbre::OctNoteFrac(int Note, int RegH, int RegL)
 {
 	Note += Control.KT.GetValue();
-	Note += (Control.DT.GetValue()>>6);
+	Note += (Control.FDT.GetValue()>>6);
 	Note = (Note >= 0)? Note: 0;
 	Note = (int)((Note < std::size(s_aOctNoteFrac))? Note: std::size(s_aOctNoteFrac)-1);
 	
 	auto OctNoteFrac = s_aOctNoteFrac[Note];
-	OctNoteFrac += ((Control.DT.GetValue()&0x3f)<<2);
+	OctNoteFrac += ((Control.FDT.GetValue()&0x3f)<<2);
 	
 	m_pFmChip->write(RegH, OctNoteFrac>>8);
 	m_pFmChip->write(RegL, OctNoteFrac&0xff);
@@ -264,7 +264,7 @@ void CTimbre::SetIntermediate(CIntermediate v)
 	Control.PMD.SetValue(v.Control.PMD);
 	Control.LFR.SetValue(v.Control.LFR);
 	Control.KT.SetValue(v.Control.KT);
-	Control.DT.SetValue(v.Control.DT);
+	Control.FDT.SetValue(v.Control.FDT);
 	
 	for (int i = 0; i < 4; ++i){
 		aOperator[i].EN.SetValue(v.aOperator[i].EN);
@@ -304,7 +304,7 @@ CIntermediate CTimbre::GetIntermediate()
 	v.Control.PMD = Control.PMD.GetValue();
 	v.Control.LFR = Control.LFR.GetValue();
 	v.Control.KT = Control.KT.GetValue();
-	v.Control.DT = Control.DT.GetValue();
+	v.Control.FDT = Control.FDT.GetValue();
 	
 	for (int i = 0; i < 4; ++i){
 		v.aOperator[i].EN = aOperator[i].EN.GetValue();

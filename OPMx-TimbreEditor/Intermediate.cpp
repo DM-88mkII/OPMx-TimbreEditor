@@ -57,7 +57,7 @@ void CIntermediate::to_json(nlohmann::json& j) const
 				{"PMD",		Control.PMD,},
 				{"LFR",		Control.LFR,},
 				{"KT",		Control.KT,	},
-				{"DT",		Control.DT,	},
+				{"FDT",		Control.FDT,},
 			}},
 			{"Operators",{
 				{"EN",{		aOperator[0].EN,	aOperator[1].EN,	aOperator[2].EN,	aOperator[3].EN,	}},
@@ -116,7 +116,7 @@ void CIntermediate::from_json(const nlohmann::json& j)
 				Control.PMD = o.at("PMD").get<int>();
 				Control.LFR = o.value("LFR", 0);
 				Control.KT = o.at("KT").get<int>();
-				Control.DT = o.at("DT").get<int>();
+				Control.FDT = o.value("FDT", 0);
 			}
 			
 			{	// 
@@ -153,6 +153,11 @@ void CIntermediate::from_json(const nlohmann::json& j)
 
 
 
+void to_json(nlohmann::json& j, const CIntermediate& r){ r.to_json(j); }
+void from_json(const nlohmann::json& j, CIntermediate& r){ r.from_json(j); }
+
+
+
 void CIntermediate::ToFormat(CSettingTab::EFormatType EFormatType, CString& Text)
 {
 	switch (EFormatType){
@@ -172,6 +177,8 @@ void CIntermediate::ToFormat(CSettingTab::EFormatType EFormatType, CString& Text
 		case CSettingTab::EFormatType::MAmidiMemoMOPM:{	ToMAmidiMemoMOPM(Text);	break;	}
 		case CSettingTab::EFormatType::ZMusicV:{		ToZMusicV(Text);		break;	}
 		case CSettingTab::EFormatType::ZMusicAt:{		ToZMusicAt(Text);		break;	}
+		case CSettingTab::EFormatType::NagDrv:{			ToNagDrv(Text);			break;	}
+		case CSettingTab::EFormatType::N88Basic:{		ToN88Basic(Text);		break;	}
 	}
 }
 
@@ -196,6 +203,8 @@ void CIntermediate::FromFormat(CSettingTab::EFormatType EFormatType, const CStri
 		case CSettingTab::EFormatType::MAmidiMemoMOPM:{	FromMAmidiMemoMOPM(Text);	break;	}
 		case CSettingTab::EFormatType::ZMusicV:{		FromZMusicV(Text);			break;	}
 		case CSettingTab::EFormatType::ZMusicAt:{		FromZMusicAt(Text);			break;	}
+		case CSettingTab::EFormatType::NagDrv:{			FromNagDrv(Text);			break;	}
+		case CSettingTab::EFormatType::N88Basic:{		FromN88Basic(Text);			break;	}
 	}
 }
 
@@ -276,7 +285,28 @@ int CIntermediate::ToValue(const std::string& Token)
 
 
 
-void CIntermediate::GetOperator(const std::vector<std::string>& Tokens, int iOperator)
+void CIntermediate::GetOperatorOPN(const std::vector<std::string>& Tokens, int iOperator)
+{
+	int TimbreToken = 0;
+	for (auto Token : Tokens){
+		switch (TimbreToken){
+			case 0:{	aOperator[iOperator].AR = ToValue(Token);	break;	}
+			case 1:{	aOperator[iOperator].DR = ToValue(Token);	break;	}
+			case 2:{	aOperator[iOperator].SR = ToValue(Token);	break;	}
+			case 3:{	aOperator[iOperator].RR = ToValue(Token);	break;	}
+			case 4:{	aOperator[iOperator].SL = ToValue(Token);	break;	}
+			case 5:{	aOperator[iOperator].TL = ToValue(Token);	break;	}
+			case 6:{	aOperator[iOperator].KS = ToValue(Token);	break;	}
+			case 7:{	aOperator[iOperator].MT = ToValue(Token);	break;	}
+			case 8:{	aOperator[iOperator].DT = ToValue(Token);	break;	}
+		}
+		++TimbreToken;
+	}
+}
+
+
+
+void CIntermediate::GetOperatorOPM(const std::vector<std::string>& Tokens, int iOperator)
 {
 	int TimbreToken = 0;
 	for (auto Token : Tokens){
@@ -299,27 +329,6 @@ void CIntermediate::GetOperator(const std::vector<std::string>& Tokens, int iOpe
 
 
 
-void CIntermediate::GetOperatorOPN(const std::vector<std::string>& Tokens, int iOperator)
-{
-	int TimbreToken = 0;
-	for (auto Token : Tokens){
-		switch (TimbreToken){
-			case 0:{	aOperator[iOperator].AR = ToValue(Token);	break;	}
-			case 1:{	aOperator[iOperator].D1R = ToValue(Token);	break;	}
-			case 2:{	aOperator[iOperator].D2R = ToValue(Token);	break;	}
-			case 3:{	aOperator[iOperator].RR = ToValue(Token);	break;	}
-			case 4:{	aOperator[iOperator].D1L = ToValue(Token);	break;	}
-			case 5:{	aOperator[iOperator].TL = ToValue(Token);	break;	}
-			case 6:{	aOperator[iOperator].KS = ToValue(Token);	break;	}
-			case 7:{	aOperator[iOperator].MT = ToValue(Token);	break;	}
-			case 8:{	aOperator[iOperator].DT1 = ToValue(Token);	break;	}
-		}
-		++TimbreToken;
-	}
-}
-
-
-
 void CIntermediate::ToMucom(CString& Text)
 {
 	std::string s;
@@ -328,14 +337,14 @@ void CIntermediate::ToMucom(CString& Text)
 	s += std::format(" {:>3},{:>3}\n", Control.FB, Control.ALG);
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += (i < 3)? "\n": ",\"\"}\n";
 	}
 	Text = s.c_str();
@@ -413,15 +422,15 @@ void CIntermediate::ToPmdOPN(CString& Text)
 	s += std::format("@{:03} {:03} {:03}\n", Control.NUM, Control.ALG, Control.FB);
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += std::format(" {:03}", aOperator[i].AR);
-		s += std::format(" {:03}", aOperator[i].D1R);
-		s += std::format(" {:03}", aOperator[i].D2R);
+		s += std::format(" {:03}", aOperator[i].DR);
+		s += std::format(" {:03}", aOperator[i].SR);
 		s += std::format(" {:03}", aOperator[i].RR);
-		s += std::format(" {:03}", aOperator[i].D1L);
+		s += std::format(" {:03}", aOperator[i].SL);
 		s += std::format(" {:03}", aOperator[i].TL);
 		s += std::format(" {:03}", aOperator[i].KS);
 		s += std::format(" {:03}", aOperator[i].MT);
-		s += std::format(" {:03}", aOperator[i].DT1);
-		s += " 000";//AMS
+		s += std::format(" {:03}", aOperator[i].DT);
+		s += " 000";//AM
 		s += "\n";
 	}
 	Text = s.c_str();
@@ -506,7 +515,7 @@ void CIntermediate::ToPmdOPM(CString& Text)
 		s += std::format(" {:03}", aOperator[i].MT);
 		s += std::format(" {:03}", aOperator[i].DT1);
 		s += std::format(" {:03}", aOperator[i].DT2);
-		s += " 000";//AMS
+		s += std::format(" {:03}", aOperator[i].AME);
 		s += "\n";
 	}
 	Text = s.c_str();
@@ -560,7 +569,7 @@ void CIntermediate::FromPmdOPM(const CString& Text)
 					case 2:
 					case 3:
 					{
-						GetOperator(Tokens, iOperator);
+						GetOperatorOPM(Tokens, iOperator);
 						++iOperator;
 						break;
 					}
@@ -583,14 +592,14 @@ void CIntermediate::ToFmp(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += "\n";
 	}
 	s += std::format("'@ {:>3},{:>3}\n", Control.ALG, Control.FB);
@@ -669,14 +678,14 @@ void CIntermediate::ToFmpA(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += ",  0";//AM
 		s += "\n";
 	}
@@ -756,14 +765,14 @@ void CIntermediate::ToFmp7F(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += "\n";
 	}
 	s += std::format("'@ {:>3},{:>3}\n", Control.ALG, Control.FB);
@@ -842,14 +851,14 @@ void CIntermediate::ToFmp7FA(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += ",  0";//AM
 		s += "\n";
 	}
@@ -994,7 +1003,7 @@ void CIntermediate::FromFmp7FC(const CString& Text)
 					case 2:
 					case 3:
 					{
-						GetOperator(Tokens, iOperator);
+						GetOperatorOPM(Tokens, iOperator);
 						++iOperator;
 						break;
 					}
@@ -1017,14 +1026,14 @@ void CIntermediate::ToMml2VgmF(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += "\n";
 	}
 	s += std::format("'@ {:>3},{:>3}\n", Control.ALG, Control.FB);
@@ -1053,7 +1062,7 @@ void CIntermediate::FromMml2VgmF(const CString& Text)
 		if (Line.size() == 0) continue;
 		
 		if (!IsTimbre){
-			if (Line.starts_with("'@ F ")){
+			if (Line.starts_with("'@ F ") && Line.find_first_of("\"") != std::string::npos){
 				IsTimbre = true;
 				
 				auto Token = Line.substr(5);
@@ -1103,16 +1112,16 @@ void CIntermediate::ToMml2VgmN(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "'@";
 		s += std::format(" {:>3}", aOperator[i].AR);
-		s += std::format(",{:>3}", aOperator[i].D1R);
-		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
 		s += std::format(",{:>3}", aOperator[i].RR);
-		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].SL);
 		s += std::format(",{:>3}", aOperator[i].TL);
 		s += std::format(",{:>3}", aOperator[i].KS);
 		s += std::format(",{:>3}", aOperator[i].MT);
-		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT);
 		s += ",  0";//AM
-		s += ",  0";//SSG
+		s += std::format(",{:>3}", aOperator[i].SSG);
 		s += "\n";
 	}
 	s += std::format("'@ {:>3},{:>3}\n", Control.ALG, Control.FB);
@@ -1141,7 +1150,7 @@ void CIntermediate::FromMml2VgmN(const CString& Text)
 		if (Line.size() == 0) continue;
 		
 		if (!IsTimbre){
-			if (Line.starts_with("'@ N ")){
+			if (Line.starts_with("'@ N ") && Line.find_first_of("\"") != std::string::npos){
 				IsTimbre = true;
 				
 				auto Token = Line.substr(5);
@@ -1168,7 +1177,23 @@ void CIntermediate::FromMml2VgmN(const CString& Text)
 					case 2:
 					case 3:
 					{
-						GetOperator(Tokens, iOperator);
+						int TimbreToken = 0;
+						for (auto Token : Tokens){
+							switch (TimbreToken){
+								case 0:{	aOperator[iOperator].AR = ToValue(Token);	break;	}
+								case 1:{	aOperator[iOperator].DR = ToValue(Token);	break;	}
+								case 2:{	aOperator[iOperator].SR = ToValue(Token);	break;	}
+								case 3:{	aOperator[iOperator].RR = ToValue(Token);	break;	}
+								case 4:{	aOperator[iOperator].SL = ToValue(Token);	break;	}
+								case 5:{	aOperator[iOperator].TL = ToValue(Token);	break;	}
+								case 6:{	aOperator[iOperator].KS = ToValue(Token);	break;	}
+								case 7:{	aOperator[iOperator].MT = ToValue(Token);	break;	}
+								case 8:{	aOperator[iOperator].DT = ToValue(Token);	break;	}
+								case 9:{	break;	}//AM
+								case 10:{	aOperator[iOperator].SSG = ToValue(Token);	break;	}
+							}
+							++TimbreToken;
+						}
 						++iOperator;
 						break;
 					}
@@ -1229,7 +1254,7 @@ void CIntermediate::FromMml2VgmM(const CString& Text)
 		if (Line.size() == 0) continue;
 		
 		if (!IsTimbre){
-			if (Line.starts_with("'@ M ")){
+			if (Line.starts_with("'@ M ") && Line.find_first_of("\"") != std::string::npos){
 				IsTimbre = true;
 				
 				auto Token = Line.substr(5);
@@ -1256,7 +1281,7 @@ void CIntermediate::FromMml2VgmM(const CString& Text)
 					case 2:
 					case 3:
 					{
-						GetOperator(Tokens, iOperator);
+						GetOperatorOPM(Tokens, iOperator);
 						++iOperator;
 						break;
 					}
@@ -1342,7 +1367,7 @@ void CIntermediate::FromMucomDotNET(const CString& Text)
 				case 3:
 				case 4:
 				{
-					GetOperator(Tokens, iOperator);
+					GetOperatorOPM(Tokens, iOperator);
 					++iOperator;
 					break;
 				}
@@ -1368,16 +1393,16 @@ void CIntermediate::ToMAmidiMemoMOPN(CString& Text)
 	for (int i = 0; i < _countof(aOperator); ++i){
 		s += "1";
 		s += std::format(",{}", aOperator[i].AR);
-		s += std::format(",{}", aOperator[i].D1R);
-		s += std::format(",{}", aOperator[i].D2R);
+		s += std::format(",{}", aOperator[i].DR);
+		s += std::format(",{}", aOperator[i].SR);
 		s += std::format(",{}", aOperator[i].RR);
-		s += std::format(",{}", aOperator[i].D1L);
+		s += std::format(",{}", aOperator[i].SL);
 		s += std::format(",{}", aOperator[i].TL);
 		s += std::format(",{}", aOperator[i].KS);
 		s += std::format(",{}", aOperator[i].MT);
-		s += std::format(",{}", aOperator[i].DT1);
+		s += std::format(",{}", aOperator[i].DT);
 		s += ",0";//AM
-		s += ",0";//SSG
+		s += std::format(",{}", aOperator[i].SSG);
 		s += "\n";
 	}
 	Text = s.c_str();
@@ -1437,14 +1462,16 @@ void CIntermediate::FromMAmidiMemoMOPN(const CString& Text)
 						switch (TimbreToken){
 							case 0:{	aOperator[iOperator].EN = ToValue(Token);	break;	}
 							case 1:{	aOperator[iOperator].AR = ToValue(Token);	break;	}
-							case 2:{	aOperator[iOperator].D1R = ToValue(Token);	break;	}
-							case 3:{	aOperator[iOperator].D2R = ToValue(Token);	break;	}
+							case 2:{	aOperator[iOperator].DR = ToValue(Token);	break;	}
+							case 3:{	aOperator[iOperator].SR = ToValue(Token);	break;	}
 							case 4:{	aOperator[iOperator].RR = ToValue(Token);	break;	}
-							case 5:{	aOperator[iOperator].D1L = ToValue(Token);	break;	}
+							case 5:{	aOperator[iOperator].SL = ToValue(Token);	break;	}
 							case 6:{	aOperator[iOperator].TL = ToValue(Token);	break;	}
 							case 7:{	aOperator[iOperator].KS = ToValue(Token);	break;	}
 							case 8:{	aOperator[iOperator].MT = ToValue(Token);	break;	}
-							case 9:{	aOperator[iOperator].DT1 = ToValue(Token);	break;	}
+							case 9:{	aOperator[iOperator].DT = ToValue(Token);	break;	}
+							case 10:{	break;	}//AM
+							case 11:{	aOperator[iOperator].SSG = ToValue(Token);	break;	}
 						}
 						++TimbreToken;
 					}
@@ -1680,7 +1707,7 @@ void CIntermediate::FromZMusicV(const CString& Text)
 				case 3:
 				case 4:
 				{
-					GetOperator(Tokens, iOperator);
+					GetOperatorOPM(Tokens, iOperator);
 					++iOperator;
 					break;
 				}
@@ -1758,7 +1785,7 @@ void CIntermediate::FromZMusicAt(const CString& Text)
 					Control.NUM = ToValue(Tokens[0]);
 					Tokens.erase(Tokens.begin());
 					
-					GetOperator(Tokens, iOperator);
+					GetOperatorOPM(Tokens, iOperator);
 					++iOperator;
 					
 					IsTimbre = true;
@@ -1801,7 +1828,7 @@ void CIntermediate::FromZMusicAt(const CString& Text)
 				case 1:
 				case 2:
 				{
-					GetOperator(Tokens, iOperator);
+					GetOperatorOPM(Tokens, iOperator);
 					++iOperator;
 					break;
 				}
@@ -1816,5 +1843,234 @@ void CIntermediate::FromZMusicAt(const CString& Text)
 
 
 
-void to_json(nlohmann::json& j, const CIntermediate& r){ r.to_json(j); }
-void from_json(const nlohmann::json& j, CIntermediate& r){ r.from_json(j); }
+void CIntermediate::ToNagDrv(CString& Text)
+{
+	std::string s;
+	s += std::format("VS {:<3}", Control.NUM);
+	s += "={";
+	for (int i = 0; i < _countof(aOperator); ++i){
+		s += std::format("{:>3}", aOperator[i].AR);
+		s += std::format(",{:>3}", aOperator[i].D1R);
+		s += std::format(",{:>3}", aOperator[i].D2R);
+		s += std::format(",{:>3}", aOperator[i].RR);
+		s += std::format(",{:>3}", aOperator[i].D1L);
+		s += std::format(",{:>3}", aOperator[i].TL);
+		s += std::format(",{:>3}", aOperator[i].KS);
+		s += std::format(",{:>3}", aOperator[i].MT);
+		s += std::format(",{:>3}", aOperator[i].DT1);
+		s += std::format(",{:>3}", aOperator[i].DT2);
+		s += std::format(",{:>3}", aOperator[i].AME);
+		s += "\n        ";
+	}
+	
+	s += std::format("{:>3}", Control.ALG);
+	s += std::format(",{:>3}", Control.FB);
+	s += std::format(",{:>3}", ((aOperator[3].EN<<3)|(aOperator[2].EN<<2)|(aOperator[1].EN<<1)|aOperator[0].EN));
+	s += ",  3";//PAN
+	s += ",  0";//VOL
+	s += "}\n";
+	
+	Text = s.c_str();
+}
+
+
+
+void CIntermediate::FromNagDrv(const CString& Text)
+{
+	auto IsTimbre = false;
+	auto IsControl = false;
+	int TimbreLine = 0;
+	int iOperator = 0;
+	
+	auto Lines = GetLines(Text);
+	for (auto& Line : Lines){
+		Line = CommentCut(Line, "*");
+		
+		Replace(Line, "\t", " ");
+		Replace(Line, "  ", " ");
+		Replace(Line, ", ", ",");
+		Replace(Line, " ,", ",");
+		Line = Trim(Line, " ");
+		//Replace(Line, ",", " ");
+		if (Line.size() == 0) continue;
+		
+		if (!IsTimbre){
+			if (Line.starts_with("VS ")){
+				Line = Line.substr(3);
+				Replace(Line, "=", ",");
+				Replace(Line, "{", " ");
+				
+				auto Tokens = GetToken(Line, ',');
+				if (Tokens.size() > 0){
+					Control.NUM = ToValue(Tokens[0]);
+					Tokens.erase(Tokens.begin());
+					
+					GetOperatorOPM(Tokens, iOperator);
+					++iOperator;
+					
+					IsTimbre = true;
+					IsControl = true;
+				}
+			}
+		} else {
+			Line = CommentCut(Line, "}");
+			
+			auto Tokens = GetToken(Line, ',');
+			switch (TimbreLine){
+				case 3:{
+					int TimbreToken = 0;
+					for (auto Token : Tokens){
+						switch (TimbreToken){
+							case 0:{	Control.ALG = ToValue(Token);	break;	}
+							case 1:{	Control.FB = ToValue(Token);	break;	}
+							case 2:{
+								auto EN = ToValue(Token);
+								aOperator[0].EN = (EN>>0) & 1;
+								aOperator[1].EN = (EN>>1) & 1;
+								aOperator[2].EN = (EN>>2) & 1;
+								aOperator[3].EN = (EN>>3) & 1;
+								break;
+							}
+							case 3:{	break;	}//PAN
+							case 4:{	break;	}//VOL
+						}
+						++TimbreToken;
+					}
+					break;
+				}
+				case 0:
+				case 1:
+				case 2:
+				{
+					GetOperatorOPM(Tokens, iOperator);
+					++iOperator;
+					break;
+				}
+			}
+			++TimbreLine;
+		}
+	}
+	if (!(IsTimbre && IsControl && iOperator == _countof(aOperator))){
+		throw std::runtime_error("Format Error");
+	}
+}
+
+
+
+void CIntermediate::ToN88Basic(CString& Text)
+{
+	std::string s;
+	int Line = Control.NUM;
+	Line = (Line > 0)? Line: 1;
+	
+	s += std::format("{}0 DATA", Line++);
+	s += std::format(" {:>3}", ((Control.FB<<3) | Control.ALG));
+	s += std::format(",{:>3}", ((aOperator[3].EN<<3)|(aOperator[2].EN<<2)|(aOperator[1].EN<<1)|aOperator[0].EN));
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += ",  0";
+	s += "\n";
+	
+	for (int i = 0; i < _countof(aOperator); ++i){
+		s += std::format("{}0 DATA", Line++);
+		s += std::format(" {:>3}", aOperator[i].AR);
+		s += std::format(",{:>3}", aOperator[i].DR);
+		s += std::format(",{:>3}", aOperator[i].SR);
+		s += std::format(",{:>3}", aOperator[i].RR);
+		s += std::format(",{:>3}", aOperator[i].SL);
+		s += std::format(",{:>3}", aOperator[i].TL);
+		s += std::format(",{:>3}", aOperator[i].KS);
+		s += std::format(",{:>3}", aOperator[i].MT);
+		s += std::format(",{:>3}", aOperator[i].DT);
+		s += ",  0";
+		s += "\n";
+	}
+	
+	Text = s.c_str();
+}
+
+
+
+void CIntermediate::FromN88Basic(const CString& Text)
+{
+	auto IsTimbre = false;
+	auto IsControl = false;
+	int TimbreLine = 0;
+	int iOperator = 0;
+	
+	auto Lines = GetLines(Text);
+	for (auto& Line : Lines){
+		Line = CommentCut(Line, "'");
+		
+		auto DATA = Line.find("DATA");
+		if (DATA != std::string::npos){
+			auto Head = Line.substr(0, DATA);
+			
+			Line = Line.substr(DATA+4);
+			
+			Replace(Line, "\t", " ");
+			Replace(Line, "  ", " ");
+			Replace(Line, ", ", ",");
+			Replace(Line, " ,", ",");
+			Line = Trim(Line, " ");
+			//Replace(Line, ",", " ");
+			if (Line.size() == 0) continue;
+			
+			auto Tokens = GetToken(Line, ',');
+			switch (TimbreLine){
+				case 0:{
+					if (Tokens.size() == 10){
+						Control.NUM = ToValue(Head) / 10;
+						
+						int TimbreToken = 0;
+						for (auto Token : Tokens){
+							switch (TimbreToken){
+								case 0:{
+									auto AF = ToValue(Token);
+									Control.ALG = (AF>>0) & 7;
+									Control.FB =  (AF>>3) & 7;
+									break;
+								}
+								case 1:{
+									auto EN = ToValue(Token);
+									aOperator[0].EN = (EN>>0) & 1;
+									aOperator[1].EN = (EN>>1) & 1;
+									aOperator[2].EN = (EN>>2) & 1;
+									aOperator[3].EN = (EN>>3) & 1;
+									break;
+								}
+							}
+							++TimbreToken;
+						}
+						IsTimbre = true;
+						IsControl = true;
+						
+						++TimbreLine;
+					}
+					break;
+				}
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				{
+					if (Tokens.size() == 10){
+						GetOperatorOPN(Tokens, iOperator);
+						++iOperator;
+						
+						++TimbreLine;
+					}
+					break;
+				}
+			}
+		}
+	}
+	if (!(IsTimbre && IsControl && iOperator == _countof(aOperator))){
+		throw std::runtime_error("Format Error");
+	}
+}

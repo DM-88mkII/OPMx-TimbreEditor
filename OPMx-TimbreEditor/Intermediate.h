@@ -26,16 +26,18 @@ struct CIntermediate
 			int KML;
 			int KMH;
 			
-			int WF;
-			int FRQ;
-			int AMS;
-			int AMD;
-			int PMS;
-			int PMD;
-			int LFR;
+			int SE;//OPN
+			
+			int WF;//OPM
+			int FRQ;//OPM
+			int AMS;//OPM
+			int AMD;//OPM
+			int PMS;//OPM
+			int PMD;//OPM
+			int LFR;//OPM
 			
 			int KT;
-			int DT;
+			int FDT;
 		};
 		Control Control;
 		
@@ -45,16 +47,22 @@ struct CIntermediate
 			int FDE;
 			
 			int AR;
-			int D1R;
-			int D2R;
+			union { int DR; int D1R; };
+			union { int SR; int D2R; };
 			int RR;
-			int D1L;
+			union { int SL; int D1L; };
 			int TL;
 			int KS;
 			int MT;
-			int DT1;
-			int DT2;
-			int AME;
+			union { int DT; int DT1; };
+			
+			int SSG;//OPN
+			int SE_FIX;//OPN
+			int SE_KT;//OPN
+			int SE_FDT;//OPN
+			
+			int DT2;//OPM
+			int AME;//OPM
 		};
 		Operator aOperator[4];
 	
@@ -72,8 +80,9 @@ struct CIntermediate
 		std::string CommentCut(const std::string& Line, const std::string& target);
 		std::string Trim(const std::string& Token, const std::string& trim);
 		int ToValue(const std::string& Token);
-		void GetOperator(const std::vector<std::string>& Tokens, int iOperator);
+		
 		void GetOperatorOPN(const std::vector<std::string>& Tokens, int iOperator);
+		void GetOperatorOPM(const std::vector<std::string>& Tokens, int iOperator);
 		
 		void ToMucom(CString& Text);
 		void FromMucom(const CString& Text);
@@ -122,6 +131,12 @@ struct CIntermediate
 		
 		void ToZMusicAt(CString& Text);
 		void FromZMusicAt(const CString& Text);
+		
+		void ToNagDrv(CString& Text);
+		void FromNagDrv(const CString& Text);
+		
+		void ToN88Basic(CString& Text);
+		void FromN88Basic(const CString& Text);
 };
 
 
