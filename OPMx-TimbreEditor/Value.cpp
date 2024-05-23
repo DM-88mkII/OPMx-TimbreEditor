@@ -127,6 +127,7 @@ template struct CValue<2, 0, 63>;
 template struct CValue<2, 1, 96>;
 template struct CValue<3, 0, 127>;
 template struct CValue<3, 0, 255>;
+template struct CValue<3, 0, 999>;
 template struct CValue<3, -64, 63>;
 template struct CValue<3, -95, 95>;
 template struct CValue<4, -999, 999>;
