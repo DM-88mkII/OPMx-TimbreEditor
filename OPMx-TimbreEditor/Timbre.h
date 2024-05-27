@@ -37,7 +37,7 @@ class CTimbre
 			CValue<1, 0, 3> AMS;
 			CValue<3, 0, 127> AMD;
 			CValue<1, 0, 7> PMS;
-			CValue<3, -64, 63> PMD;
+			CValue<3, 0, 127> PMD;
 			CValue<1, 0, 1> LFR;
 			
 			CValue<3, -95, 95> KT;
