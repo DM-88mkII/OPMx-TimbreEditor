@@ -157,6 +157,8 @@
 #define IDC_TIMBRE_OP3_STATIC           1093
 #define IDC_TIMBRE_OP4_STATIC           1094
 #define IDC_TIMBRE_VOID2_0_STATIC       1095
+#define IDC_CHECK1                      1095
+#define IDC_SETTING_SWAP_PREVIEW_CHECK  1095
 #define IDC_TIMBRE_VOID3_0_STATIC       1096
 #define IDC_TIMBRE_VOID4_0_STATIC       1097
 
@@ -166,7 +168,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        182
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1095
+#define _APS_NEXT_CONTROL_VALUE         1096
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
