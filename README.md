@@ -34,6 +34,7 @@ YAMAHA の FM音源チップ OPM系用の音色エディターです。
   * NAGDRV
   * NRTDRV（MODE5）
   * mmldrv
+  * mmlgui
   * MUAP98
   * V3MML（OPN）
   * V3MML（OPNA）
