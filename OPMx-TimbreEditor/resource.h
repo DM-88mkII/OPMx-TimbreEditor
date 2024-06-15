@@ -144,6 +144,7 @@
 #define IDC_SETTING_DC_CUT_RATE_SLIDER  1082
 #define IDC_TIMBRE_ALG0_STATIC          1082
 #define IDC_TIMBRE_ALG1_STATIC          1083
+#define IDC_SETTING_VOLUME_SLIDER       1083
 #define IDC_TIMBRE_ALG2_STATIC          1084
 #define IDC_TIMBRE_ALG3_STATIC          1085
 #define IDC_TIMBRE_ALG4_STATIC          1086
@@ -157,9 +158,9 @@
 #define IDC_TIMBRE_OP3_STATIC           1093
 #define IDC_TIMBRE_OP4_STATIC           1094
 #define IDC_TIMBRE_VOID2_0_STATIC       1095
-#define IDC_CHECK1                      1095
 #define IDC_SETTING_SWAP_PREVIEW_CHECK  1095
 #define IDC_TIMBRE_VOID3_0_STATIC       1096
+#define IDC_SETTING_LOG                 1096
 #define IDC_TIMBRE_VOID4_0_STATIC       1097
 
 // Next default values for new objects
@@ -168,7 +169,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        182
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1096
+#define _APS_NEXT_CONTROL_VALUE         1097
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
