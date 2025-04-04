@@ -267,6 +267,7 @@ BEGIN
     RTEXT           "x4.0",IDC_STATIC,186,96,12,8
     RTEXT           "Volume",IDC_STATIC,114,85,23,8
     CTEXT           "スタティック",IDC_SETTING_LOG,114,126,90,8
+    CONTROL         "SLの増減をTLに反映させる",IDC_SETTING_SLTL_LINK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,167,108,90,10
 END
 
 
